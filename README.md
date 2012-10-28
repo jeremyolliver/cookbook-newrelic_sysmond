@@ -33,7 +33,7 @@ Usage
 
 Set either on your node, or in a role/environment the attribute
 
-    `[:newrelic][:license_key]`
+    node[:newrelic][:license_key]
 
 and include this cookbook in your run list.
 
