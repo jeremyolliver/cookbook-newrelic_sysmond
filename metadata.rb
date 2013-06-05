@@ -3,9 +3,9 @@ maintainer_email "jeremy.olliver@gmail.com"
 license          "Apache 2.0"
 description      "Installs/Configures newrelic_sysmond"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.1.0"
+version          "0.1.1"
 
-depends "apt", "= 1.4.2" # As of 1.4.8 there is a bug with notifications from apt_repository resources
+depends "apt", ">= 1.8.2" # Some earlier versions don't correctly trigger an apt-get update after adding the repo
 
 supports "ubuntu"
 supports "debian"
