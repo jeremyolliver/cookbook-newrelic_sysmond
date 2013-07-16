@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of newrelic_sysmond.
 
+## 0.2.0:
+
+* Added support for redhat, centos, amazon, scientific
+* Added all remaining configuration options as attributes
+
 ## 0.1.1:
 
 This relaxes the version constraint on apt provided a recent enough one is used
@@ -11,8 +16,3 @@ This relaxes the version constraint on apt provided a recent enough one is used
 ## 0.1.0:
 
 * Initial release of newrelic_sysmond
-
-- - -
-Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
-
-The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences between markdown on github and standard markdown.
