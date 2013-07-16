@@ -1,3 +1,4 @@
+name             "newrelic_sysmond"
 maintainer       "Jeremy Olliver"
 maintainer_email "jeremy.olliver@gmail.com"
 license          "Apache 2.0"
