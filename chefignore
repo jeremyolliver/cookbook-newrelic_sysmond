@@ -1,2 +1,9 @@
 Gemfile
 Gemfile.lock
+.git
+.gitignore
+Berksfile
+Berksfile.lock
+cookbooks/*
+tmp
+.travis.yml
