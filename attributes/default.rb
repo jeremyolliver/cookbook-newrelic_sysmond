@@ -1,4 +1,11 @@
-default[:newrelic][:ssl]            = true # This has been changed from newrelic's default of false
-default[:newrelic][:collector_host] = 'collector.newrelic.com'
-default[:newrelic][:timeout]        = 30
-default[:newrelic][:loglevel]       = 'info'
+default["newrelic"]["keyserver"]      = "subkeys.pgp.net"
+default["newrelic"]["license_key"]    = nil
+default["newrelic"]["loglevel"]       = "info"
+default["newrelic"]["logfile"]        = "/var/log/newrelic/nrsysmond.log"
+default["newrelic"]["proxy"]          = nil
+default["newrelic"]["ssl"]            = true # This has been changed from newrelic's default of false
+default["newrelic"]["ssl_ca_bundle"]  = nil
+default["newrelic"]["ssl_ca_path"]    = nil
+default["newrelic"]["pidfile"]        = nil
+default["newrelic"]["collector_host"] = "collector.newrelic.com"
+default["newrelic"]["timeout"]        = 30
