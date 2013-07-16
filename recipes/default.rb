@@ -17,33 +17,49 @@
 # limitations under the License.
 #
 
-include_recipe("apt")
+if node['newrelic']['license_key']
 
-apt_repository "newrelic" do
-  uri "http://apt.newrelic.com/debian/"
-  components ["newrelic", "non-free"]
-  keyserver "subkeys.pgp.net" # hkp://subkeys.pgp.net
-  key "548C16BF"
-  notifies :run, resources(:execute => "apt-get update"), :immediately
-  not_if { File.exist?("/etc/apt/sources.list.d/newrelic-source.list") }
-end
+  # First add the appropriate platform specific repository
 
-package "newrelic-sysmond" do
-  action :upgrade
-end
+  case node['platform']
+  when "debian", "ubuntu"
 
-if node[:newrelic][:license_key]
+    include_recipe("apt")
+
+    apt_repository "newrelic" do
+      uri "http://apt.newrelic.com/debian/"
+      components ["newrelic", "non-free"]
+      keyserver node["newrelic"]["keyserver"] # hkp://subkeys.pgp.net
+      key "548C16BF"
+      notifies :run, resources(:execute => "apt-get update"), :immediately
+      not_if { File.exist?("/etc/apt/sources.list.d/newrelic-source.list") }
+    end
+
+  when "redhat", "centos", "amazon", "scientific"
+
+    execute "Add New Relic yum repository" do
+      command "rpm -Uvh http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm"
+      not_if "yum list installed | grep newrelic-repo.noarch"
+    end
+
+  end
+
+  # Ensure the newrelic-sysmond package is installed and up to date.
+
+  package "newrelic-sysmond" do
+    action :upgrade
+  end
 
   template "/etc/newrelic/nrsysmond.cfg" do
     source "nrsysmond.cfg.erb"
-    variables :newrelic => node[:newrelic]
+    variables :newrelic => node['newrelic']
     owner  "root"
     group  "newrelic"
     mode   "0640"
   end
 
   service "newrelic-sysmond" do
-    action :enable
+    action [:enable, :start]
   end
 
 else
