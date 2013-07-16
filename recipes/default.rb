@@ -31,7 +31,7 @@ if node['newrelic']['license_key']
       components ["newrelic", "non-free"]
       keyserver node["newrelic"]["keyserver"] # hkp://subkeys.pgp.net
       key "548C16BF"
-      notifies :run, resources(:execute => "apt-get update"), :immediately
+      notifies :run, "execute[apt-get update]", :immediately
       not_if { File.exist?("/etc/apt/sources.list.d/newrelic-source.list") }
     end
 
