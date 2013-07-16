@@ -1,26 +1,38 @@
 Description
 ===========
 
-This cookbook installs, and keeps up to date the newrelic system monitoring daemon "newrelic-sysmond". So far this cookbook only supports debian systems
+This cookbook installs, and keeps up to date the newrelic system monitoring daemon "newrelic-sysmond". This cookbook should support all of ubuntu debian redhat centos amazon scientific though it is only actively tested on ubuntu and redhat systems.
+
+This cookbook will install newrelic-sysmond as per default configurations provided by newrelic on your system, with one exception - traffic will be sent over SSL by default, the default newrelic configuration file has SSL off.
 
 Requirements
 ============
 
-ubuntu/debian
+If you are using ubuntu or debian, you should have "1.8.2" or higher of the apt cookbook as well. (Earlier versions don't trigger an apt-get update after adding the repository).
 
-Also depends on version 1.4.2 of the apt cookbook. This is because more recent
-versions break the notifications, causing apt-get update to never run after
-adding the newrelic package repository, and the installation to fail without
-manually running apt-get update in between
+You will also need a newrelic account (free plan is available), and to provide your newrelic license key via attributes to this cookbook.
 
 Attributes
 ==========
 
-* newrelic[:license_key]    Needs specifying
-* newrelic[:ssl]            = true # changed from newrelic's default of false
-* newrelic[:collector_host] = 'collector.newrelic.com'
-* newrelic[:timeout]        = 30
-* newrelic[:loglevel]       = 'info'
+All attributes map to configuration optionsof the same name in the newrelic config file.
+
+Common options:
+
+* `newrelic['license_key']`    Needs specifying
+* `newrelic['ssl']`            = `true` # changed from newrelic's default of false
+* `newrelic['timeout']`        = `30`
+* `newrelic['loglevel']`       = `'info'`
+* `newrelic["proxy"]`          = `nil`
+
+Other attributes:
+
+* `newrelic['collector_host']` = `'collector.newrelic.com'`
+* `newrelic["keyserver"]`      = `'subkeys.pgp.net'`
+* `newrelic["logfile"]`        = `'/var/log/newrelic/nrsysmond.log'`
+* `newrelic["ssl_ca_bundle"]`  = `nil`
+* `newrelic["ssl_ca_path"]`    = `nil`
+* `newrelic["pidfile"]`        = `nil`
 
 The license key needs specifying with your own newrelic license key.
 All other attributes are keep the same as the default configuration provided
@@ -33,7 +45,7 @@ Usage
 
 Set either on your node, or in a role/environment the attribute
 
-    node[:newrelic][:license_key]
+    node['newrelic']['license_key']
 
 and include this cookbook in your run list.
 
